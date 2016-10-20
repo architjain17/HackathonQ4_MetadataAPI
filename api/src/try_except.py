@@ -10,6 +10,7 @@ def try_except(f):
         try:
             return f(*args, **kwargs)
         except Exception, e:
+            print e
             error = {
             "status": "500",
             "error": "Internal Server Error"
