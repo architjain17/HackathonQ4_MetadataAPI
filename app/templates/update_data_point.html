@@ -2,12 +2,12 @@
 <center><h2>Metadata as a Service (MaaS)</h2></center>
 
 {% if data_point %}
-{% if data_point|length == 4 %}
+{% if data_point|length <= 4 %}
     {% for key, value in data_point.iteritems() %}
         <h5>{{ key }} : {{value}}</h5>
     {% endfor %}
 {% else %}
-    <form action="{{url_for('update_data_point_by_id', update='true')}}" method="get">
+    <form action="{{url_for('update_data_point_by_id')}}" method="get">
         {% if type == 'parsed_dict' %}
         <h2>Details for Datapoint having id = {{ data_point['id'] }}</h2>
         <table>
@@ -15,17 +15,13 @@
                 <tr>
                     <th>{{ key }}</th>
                     {% if key in ['human_name', 'shift', 'precision', 'description'] %}
-                        {% if value == '' %}
-                            <td><input type="text" value='' name="{{ key }}"/></td>
+                        {% if key == 'description' %}
+                            <td><textarea cols="100" rows="5"  name="{{ key }}">{{ value }}</textarea></td>
                         {% else %}
                             <td><input type="text" value="{{ value }}" name="{{ key }}"/></td>
                         {% endif %}
                     {% else %}
-                        {% if value == '' %}
-                            <td><input type="text" value='' name="{{ key }}" disabled/></td>
-                        {% else %}
                             <td><input type="text" value="{{ value }}" name="{{ key }}" disabled/></td>
-                        {% endif %}
                     {% endif %}
                 </tr>
             {% endfor %}

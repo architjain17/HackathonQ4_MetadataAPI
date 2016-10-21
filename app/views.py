@@ -9,6 +9,7 @@ import requests
 
 from util import traverse_dict
 
+
 def read_config():
     config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config/api_config.json')
     with open(config_file) as cf:
@@ -20,6 +21,7 @@ config = read_config()
 SERVER = config['server']
 USERNAME = config['username']
 PASSWORD = config['password']
+
 
 @app.route('/')
 @app.route('/index')
@@ -39,7 +41,6 @@ def get_data_point_by_id():
 @app.route('/get_by_db', methods=['POST', 'GET'])
 def get_data_point_by_db():
     database = request.args.get('database')
-    server = '127.0.0.1:5001'
     app_data = requests.get('http://{0}/metadata/{1}'.format(SERVER, database),
                             auth=(USERNAME, PASSWORD)).json()
 
@@ -48,7 +49,6 @@ def get_data_point_by_db():
 
 @app.route('/get_all', methods=['POST', 'GET'])
 def get_data_point_all():
-    server = '127.0.0.1:5001'
     app_data = requests.get('http://{0}/metadata'.format(SERVER),
                             auth=(USERNAME, PASSWORD)).json()
 
@@ -57,7 +57,6 @@ def get_data_point_all():
 
 @app.route('/update', methods=['POST', 'GET'])
 def update_data_point_by_id():
-    server = '127.0.0.1:5001'
     data_point_id = request.args.get('update')
 
     if data_point_id:
