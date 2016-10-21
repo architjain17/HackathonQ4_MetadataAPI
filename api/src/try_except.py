@@ -1,3 +1,5 @@
+import sys
+import traceback
 from functools import wraps
 
 # internal imports
@@ -10,7 +12,7 @@ def try_except(f):
         try:
             return f(*args, **kwargs)
         except Exception, e:
-            print e
+            print traceback.print_exc()
             error = {
             "status": "500",
             "error": "Internal Server Error"

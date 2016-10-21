@@ -7,6 +7,7 @@ from src.try_except import try_except
 from src.authorization import requires_auth
 from src.db_connector import engine
 from src.response import prepare_data_response, prepare_error_response
+from src.version_controller import save_version
 
 
 app = Flask(__name__)
@@ -140,6 +141,8 @@ class MetadataAPIID(Resource):
 
         results.close()
         conn.close()
+
+        save_version(username, comments)
 
         kwargs = {'id': id}
         output = MetadataAPIID().get(**kwargs)
